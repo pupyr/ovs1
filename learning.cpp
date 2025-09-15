@@ -12,9 +12,9 @@ using namespace std;
 #define layers_num 1
 #define layers_sizes {3}
 #define default_weight 0
-double a = 10;
-#define epoch 20
-#define threshold 0.95
+double a = 5;
+#define epoch 10
+#define threshold 0.85
 
 struct point{
     vector<double> weights;
@@ -62,7 +62,6 @@ double middle_err(int lay, int i){
 
 double last_err(int right_answer, int lay, int i){
     double last_out = nn[lay][i].out;
-    // cout<<i<<" "<<last_out*(1.0-last_out)*(((double)right_answer==i) - last_out)<<endl;
     return last_out*(1.0-last_out)*(((double)right_answer==i) - last_out);
 }
 
@@ -85,8 +84,8 @@ void correct_weights(bmp b, int right_answer){
 void learning(){
     vector<string> v;
     for(pair<string, figure> p: Figure)
-        for(int i=0; i<1; i++)
-            for(int j=0; j<=2; j++){
+        for(int i=0; i<=/*7-p.second.width*/0; i++)
+            for(int j=0; j<=/*7-p.second.height*/2; j++){
                 char s[30];
                 string str = p.first;
                 sprintf(s, "imgs/%s/%d_%d.bmp",str.c_str(),i,j);
@@ -102,10 +101,9 @@ void learning(){
                 char *str = (char*) v[num++].c_str();
                 bmp b = bmp(str);
                 answer(b);
-                // cout<<p.first<<" "<<nn[layers_num-1][0].out<<" "<<nn[layers_num-1][1].out<<" "<<nn[layers_num-1][2].out<<endl;
-                correct_weights(b, p.first == "triangle" ? 0
-                                                         : (p.first == "square" ? 1
-                                                                                : 2));
+                correct_weights(b, str[5] == 't' ? 0
+                                                 : (str[5] == 's' ? 1
+                                                                  : 2));
             }
 }
 
@@ -114,12 +112,14 @@ int moreThreshold(int id){
 }
 
 void test(char* str){
+    cout<<"test "<<str<<" started:"<<endl;
     bmp test = bmp(str);
     answer(test);
     if(moreThreshold(0)) cout<<"Triangle"<<endl;
     if(moreThreshold(1)) cout<<"Square"<<endl;
     if(moreThreshold(2)) cout<<"Circle"<<endl;
-    cout<< nn[layers_num-1][0].out<<" "<<nn[layers_num-1][1].out<<" "<<nn[layers_num-1][2].out<<endl;
+    // cout<< nn[layers_num-1][0].out<<" "<<nn[layers_num-1][1].out<<" "<<nn[layers_num-1][2].out<<endl;
+    cout<<endl;
 }
 
 int main(){
@@ -130,6 +130,9 @@ int main(){
     }
 
     test((char*)"imgs/triangle.bmp");
+    test((char*)"imgs/triangle_break.bmp");
     test((char*)"imgs/circle.bmp");
+    test((char*)"imgs/circle_break.bmp");
     test((char*)"imgs/square.bmp");
+    test((char*)"imgs/square_break.bmp");
 }
