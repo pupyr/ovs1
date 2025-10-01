@@ -25,9 +25,9 @@ double a = 0.1;
 #define layers_sizes {24,3}
 double default_weight = 0;
 double a = 0.3;
-#define epoch 1500
-#define a_0 1
-#define threshold 0.8
+#define epoch 1000
+#define a_0 0.9999
+#define threshold 0.7
 #endif
 
 #define picture_size 7*7
