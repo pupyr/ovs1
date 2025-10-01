@@ -22,11 +22,11 @@ double a = 0.1;
 
 #ifdef lay2
 #define layers_num 2
-#define layers_sizes {24,3}
+#define layers_sizes {10,3}
 double default_weight = 0;
-double a = 0.3;
+double a = 0.1;
 #define epoch 1000
-#define a_0 0.9999
+#define a_0 1
 #define threshold 0.7
 #endif
 
