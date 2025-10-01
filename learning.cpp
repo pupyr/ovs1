@@ -7,6 +7,7 @@
 #include <random>
 #include "bmp.cpp"
 #include "figure.cpp"
+#include <cstdlib>
 using namespace std;
 
 #ifdef lay1
@@ -22,8 +23,8 @@ double a = 0.1;
 #ifdef lay2
 #define layers_num 2
 #define layers_sizes {24,3}
-double default_weight = 5;
-double a = 0.5;
+double default_weight = 0;
+double a = 0.3;
 #define epoch 1500
 #define a_0 1
 #define threshold 0.8
@@ -46,7 +47,7 @@ void initNN(){
         for(size_t j=0; j<sizes[i]; j++){
             vector<double> weights(i==0 ? picture_size : sizes[i-1], default_weight);
             vector<double> weights_tmps(i==0 ? picture_size : sizes[i-1], default_weight);
-            default_weight*=-0.99;
+            default_weight=(rand()%100)/100.0-0.5;
             nn[i].push_back((point){.weights=weights, .weights_tmps=weights_tmps});
         }
 }
