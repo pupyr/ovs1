@@ -66,8 +66,8 @@ struct figure{
 map<string, figure> Figure = {
     pair<string, figure>{"triangle", (figure){triangle, 14, 9, 5}},
     pair<string, figure>{"square", (figure){square,   16, 5, 5}}
-    #ifdef lay1
+    // #ifdef lay1
     ,
     pair<string, figure>{"circle", (figure){circle,   12, 5, 5}}
-    #endif
+    // #endif
 };

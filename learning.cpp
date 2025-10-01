@@ -12,7 +12,7 @@ using namespace std;
 #ifdef lay1
 #define layers_num 1
 #define layers_sizes {3}
-#define default_weight 0
+double default_weight = 0;
 double a = 0.1;
 #define epoch 1000
 #define a_0 1
@@ -21,13 +21,15 @@ double a = 0.1;
 
 #ifdef lay2
 #define layers_num 2
-#define layers_sizes {1,3}
-#define default_weight 0.5
-double a = 5;
-#define epoch 20
+#define layers_sizes {24,3}
+double default_weight = 5;
+double a = 0.5;
+#define epoch 1500
 #define a_0 1
 #define threshold 0.8
 #endif
+
+#define picture_size 7*7
 
 struct point{
     vector<double> weights;
@@ -42,8 +44,9 @@ vector<point> nn[layers_num];
 void initNN(){
     for(int i=0; i<layers_num; i++)
         for(size_t j=0; j<sizes[i]; j++){
-            vector<double> weights(i==0 ? 7*7 : sizes[i-1], default_weight);
-            vector<double> weights_tmps(i==0 ? 7*7 : sizes[i-1], default_weight);
+            vector<double> weights(i==0 ? picture_size : sizes[i-1], default_weight);
+            vector<double> weights_tmps(i==0 ? picture_size : sizes[i-1], default_weight);
+            default_weight*=-0.99;
             nn[i].push_back((point){.weights=weights, .weights_tmps=weights_tmps});
         }
 }
@@ -157,10 +160,10 @@ int main(){
 
     test((char*)"imgs/triangle.bmp");
     test((char*)"imgs/triangle_break.bmp");
-    #ifdef lay1
+    // #ifdef lay1
     test((char*)"imgs/circle.bmp");
     test((char*)"imgs/circle_break.bmp");
-    #endif
+    // #endif
     test((char*)"imgs/square.bmp");
     test((char*)"imgs/square_break.bmp");
 }
