@@ -23,6 +23,7 @@ class bmp{
                     fread(&p, sizeof(point), 1, f);
                     data[i][j]= p; 
                 }
+            fclose(f);
         }
 
         void clear(){
